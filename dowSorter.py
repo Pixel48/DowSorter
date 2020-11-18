@@ -24,6 +24,7 @@ MONTHS = {
   'Nov': '11',
   'Dec': '12',
 }
+
 REGEX = re.compile(r'\d\d\d\d-((0\d)|(1[0-2]))-(([0-2]\d)|(3[0-1]))')
 
 def theDate(pathToFile, mDate): # get file creation/modyfication date
