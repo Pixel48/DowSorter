@@ -25,9 +25,7 @@ MONTHS = {
   'Dec': '12',
 }
 
-REGEX = re.compile(r'\d\d\d\d-((0\d)|(1[0-2]))-(([0-2]\d)|(3[0-1]))')
-
-REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|31))')
+REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|31)')
 
 def theDate(pathToFile, mDate): # get file creation/modification date
   if platform.system() == 'Windows':
@@ -54,5 +52,5 @@ for file in os.listdir(): # move all stuff into date folder
       pass
 
 for file in os.listdir(): # cleanup empty folders
-  if os.path.isdir(file) and file not in ('System Volume Information',):
+  if os.path.isdir(file) and file not in ('System Volume Information', sys.argv[0]):
     if not bool(os.listdir(file)): os.rmdir(file)
