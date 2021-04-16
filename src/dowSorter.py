@@ -25,7 +25,8 @@ MONTHS = {
   'Dec': '12',
 }
 
-REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|31)')
+SELF = sys.argv[0]
+REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[0-1])')
 
 def theDate(pathToFile, mDate): # get file creation/modification date
   if platform.system() == 'Windows':
@@ -43,7 +44,7 @@ for file in os.listdir(): # move all stuff into date folder
     os.stat(thedate)
   except:
     os.mkdir(thedate)
-  if (bool(REGEX.match(file))) or (file in ('dowSort.exe', 'dowSort.py', '$RECYCLE.BIN',)): # except folders with date format YYYY-MM-DD and protected files
+  if (bool(REGEX.match(file))) or (file in ('$RECYCLE.BIN', 'System Volume Information', SELF, 'dowSorter.exe', 'dowSorter.py')): # except folders with date format YYYY-MM-DD and protected files
     pass
   else:
     try:
@@ -52,5 +53,5 @@ for file in os.listdir(): # move all stuff into date folder
       pass
 
 for file in os.listdir(): # cleanup empty folders
-  if os.path.isdir(file) and file not in ('System Volume Information', sys.argv[0]):
+  if os.path.isdir(file) and file not in ('System Volume Information',):
     if not bool(os.listdir(file)): os.rmdir(file)
