@@ -27,7 +27,9 @@ MONTHS = {
 
 REGEX = re.compile(r'\d\d\d\d-((0\d)|(1[0-2]))-(([0-2]\d)|(3[0-1]))')
 
-def theDate(pathToFile, mDate): # get file creation/modyfication date
+REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|31))')
+
+def theDate(pathToFile, mDate): # get file creation/modification date
   if platform.system() == 'Windows':
     if mDate: complexDate = time.ctime(os.path.getmtime(pathToFile)).split()
     else: complexDate = time.ctime(os.path.getctime(pathToFile)).split()
