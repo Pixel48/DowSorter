@@ -22,8 +22,12 @@ MONTHS = {
   'Sep': '09',
   'Oct': '10',
   'Nov': '11',
-  'Dec': '12',
-}
+  'Dec': '12',}
+SYSFILES = (
+  '$RECYCLE.BIN',
+  'System Volume Information',
+  'dowSorter.exe',
+  'dowSorter.py')
 
 SELF = sys.argv[0]
 REGEX = re.compile(r'\d{4}-(0[1-9]|1[0-2])-([0-2]\d|3[0-1])')
@@ -40,18 +44,12 @@ def theDate(pathToFile, mDate): # get file creation/modification date
 
 for file in os.listdir(): # move all stuff into date folder
   thedate = theDate(file, MOD)
-  try: # Create DATE folder, if exsistn't
-    os.stat(thedate)
-  except:
-    os.mkdir(thedate)
-  if (bool(REGEX.match(file))) or (file in ('$RECYCLE.BIN', 'System Volume Information', SELF, 'dowSorter.exe', 'dowSorter.py')): # except folders with date format YYYY-MM-DD and protected files
-    pass
-  else:
-    try:
-      shutil.move(file, thedate)
-    except:
-      pass
+  try: os.stat(thedate) # Create DATE folder, if exsistn't
+  except: os.mkdir(thedate)
+  if not ((bool(REGEX.match(file))) or (file in SYSFILES)): # except folders with date format YYYY-MM-DD and protected files
+    try: shutil.move(file, thedate)
+    except: pass # leave if can't move
 
 for file in os.listdir(): # cleanup empty folders
-  if os.path.isdir(file) and file not in ('System Volume Information',):
+  if os.path.isdir(file) and file not in SYSFILES:
     if not bool(os.listdir(file)): os.rmdir(file)
